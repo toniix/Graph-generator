@@ -7,15 +7,13 @@
  * - Matriz de adyacencia
  */
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 import {
   calcularGradoVertice,
   calcularGradoTotal,
   generarListaAdyacencia,
   generarMatrizAdyacencia,
-} from '../utils/grafoUtils';
-
-
+} from "../utils/grafoUtils";
 
 /* ── Sub-componente: Cabecera de sección ─────────────────── */
 function SectionHeader({ title, icon, isOpen, onToggle }) {
@@ -23,30 +21,35 @@ function SectionHeader({ title, icon, isOpen, onToggle }) {
     <button
       onClick={onToggle}
       style={{
-        width:         '100%',
-        display:       'flex',
-        alignItems:    'center',
-        justifyContent:'space-between',
-        padding:       '8px 12px',
-        background:    '#21262d',
-        border:        '1px solid #30363d',
-        borderRadius:  '8px',
-        color:         '#8b949e',
-        fontSize:      '11px',
-        fontWeight:    '600',
-        textTransform: 'uppercase',
-        letterSpacing: '0.06em',
-        cursor:        'pointer',
-        fontFamily:    'Inter, sans-serif',
-        transition:    'background 0.15s ease',
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "8px 12px",
+        background: "#21262d",
+        border: "1px solid #30363d",
+        borderRadius: "8px",
+        color: "#8b949e",
+        fontSize: "11px",
+        fontWeight: "600",
+        textTransform: "uppercase",
+        letterSpacing: "0.06em",
+        cursor: "pointer",
+        fontFamily: "Inter, sans-serif",
+        transition: "background 0.15s ease",
       }}
-      onMouseEnter={(e) => e.currentTarget.style.background = '#2a3441'}
-      onMouseLeave={(e) => e.currentTarget.style.background = '#21262d'}
+      onMouseEnter={(e) => (e.currentTarget.style.background = "#2a3441")}
+      onMouseLeave={(e) => (e.currentTarget.style.background = "#21262d")}
     >
-      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+      <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
         <span>{icon}</span> {title}
       </span>
-      <span style={{ transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }}>
+      <span
+        style={{
+          transform: isOpen ? "rotate(180deg)" : "none",
+          transition: "transform 0.2s ease",
+        }}
+      >
         ▾
       </span>
     </button>
@@ -59,10 +62,16 @@ function SectionHeader({ title, icon, isOpen, onToggle }) {
  * @param {Array}       props.aristas
  * @param {string|null} props.verticeSeleccionado - ID del vértice activo
  */
-export default function PanelInfo({ vertices, aristas, verticeSeleccionado }) {
-  const [openGrados,  setOpenGrados]  = useState(true);
-  const [openLista,   setOpenLista]   = useState(true);
-  const [openMatriz,  setOpenMatriz]  = useState(true);
+export default function PanelInfo({
+  vertices,
+  aristas,
+  verticeSeleccionado,
+  componentesConColores = [],
+}) {
+  const [openComponentes, setOpenComponentes] = useState(true);
+  const [openGrados, setOpenGrados] = useState(true);
+  const [openLista, setOpenLista] = useState(true);
+  const [openMatriz, setOpenMatriz] = useState(true);
 
   /* ── Métricas derivadas ────────────────────────────────── */
   const gradoTotal = useMemo(() => calcularGradoTotal(aristas), [aristas]);
@@ -73,7 +82,7 @@ export default function PanelInfo({ vertices, aristas, verticeSeleccionado }) {
         ...v,
         grado: calcularGradoVertice(v.id, aristas),
       })),
-    [vertices, aristas]
+    [vertices, aristas],
   );
 
   /* Valores máximo y mínimo de grado */
@@ -85,70 +94,200 @@ export default function PanelInfo({ vertices, aristas, verticeSeleccionado }) {
 
   const listaAdyacencia = useMemo(
     () => generarListaAdyacencia(vertices, aristas),
-    [vertices, aristas]
+    [vertices, aristas],
   );
 
   const { labels: matrizLabels, matrix } = useMemo(
     () => generarMatrizAdyacencia(vertices, aristas),
-    [vertices, aristas]
+    [vertices, aristas],
   );
 
   /* ── Estilos compartidos ───────────────────────────────── */
   const cardStyle = {
-    background:   '#21262d',
-    border:       '1px solid #30363d',
-    borderRadius: '8px',
-    overflow:     'hidden',
+    background: "#21262d",
+    border: "1px solid #30363d",
+    borderRadius: "8px",
+    overflowY: "auto",
+    maxHeight: "180px",
   };
 
   const monoStyle = {
     fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-    fontSize:   '12px',
+    fontSize: "12px",
   };
 
   return (
     <aside
       id="panel-info"
       style={{
-        width:         '260px',
-        minWidth:      '260px',
-        height:        '100%',
-        overflowY:     'auto',
-        background:    '#161b22',
-        borderLeft:    '1px solid #30363d',
-        display:       'flex',
-        flexDirection: 'column',
-        gap:           '10px',
-        padding:       '14px 10px',
+        width: "260px",
+        minWidth: "260px",
+        height: "100%",
+        overflowY: "auto",
+        background: "#161b22",
+        borderLeft: "1px solid #30363d",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        padding: "14px 10px",
       }}
     >
       {/* Título */}
-      <div style={{ padding: '4px 4px 10px', borderBottom: '1px solid #30363d' }}>
-        <div style={{ fontSize: '13px', fontWeight: '700', color: '#e6edf3' }}>
+      <div
+        style={{ padding: "4px 4px 10px", borderBottom: "1px solid #30363d" }}
+      >
+        <div style={{ fontSize: "13px", fontWeight: "700", color: "#e6edf3" }}>
           Análisis del Grafo
         </div>
-        <div style={{ fontSize: '11px', color: '#484f58', marginTop: '2px' }}>
+        <div style={{ fontSize: "11px", color: "#484f58", marginTop: "2px" }}>
           Actualización en tiempo real
         </div>
       </div>
 
-
+      {/* Tarjeta de Componentes Conexas */}
+      <div
+        style={{
+          background: "#21262d",
+          border: "1px solid rgba(88, 166, 255, 0.2)",
+          borderRadius: "8px",
+          padding: "10px 12px",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "18px",
+            width: "34px",
+            height: "34px",
+            borderRadius: "8px",
+            background: "rgba(88, 166, 255, 0.1)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            color: "#58a6ff",
+          }}
+        >
+          🧩
+        </div>
+        <div>
+          <div
+            style={{
+              fontSize: "20px",
+              fontWeight: "700",
+              color: "#e6edf3",
+              lineHeight: 1,
+            }}
+          >
+            {componentesConColores.length}
+          </div>
+          <div style={{ fontSize: "11px", color: "#8b949e", marginTop: "2px" }}>
+            Componentes conexas
+          </div>
+        </div>
+      </div>
 
       {/* Teorema del apretón de manos */}
       {aristas.length > 0 && (
         <div
           style={{
-            background:   'rgba(240,136,62,0.08)',
-            border:       '1px solid rgba(240,136,62,0.2)',
-            borderRadius: '8px',
-            padding:      '8px 10px',
-            fontSize:     '11px',
-            color:        '#8b949e',
-            lineHeight:   1.5,
+            background: "rgba(240,136,62,0.08)",
+            border: "1px solid rgba(240,136,62,0.2)",
+            borderRadius: "8px",
+            padding: "8px 10px",
+            fontSize: "11px",
+            color: "#8b949e",
+            lineHeight: 1.5,
           }}
         >
-          <span style={{ color: '#f0883e', fontWeight: '600' }}>📐 Teorema:</span>{' '}
-          Grado total = 2 × |E| = 2 × {aristas.length} = <strong style={{ color: '#f0883e' }}>{gradoTotal}</strong>
+          <span style={{ color: "#f0883e", fontWeight: "600" }}>
+            📐 Teorema:
+          </span>{" "}
+          Grado total = 2 × |E| = 2 × {aristas.length} ={" "}
+          <strong style={{ color: "#f0883e" }}>{gradoTotal}</strong>
+        </div>
+      )}
+
+      {/* ── Componentes Conexas ─────── */}
+      <SectionHeader
+        title="Componentes Conexas"
+        icon="📌"
+        isOpen={openComponentes}
+        onToggle={() => setOpenComponentes((o) => !o)}
+      />
+      {openComponentes && (
+        <div style={{ ...cardStyle, padding: "10px 12px" }}>
+          {vertices.length === 0 ? (
+            <div
+              style={{
+                fontSize: "12px",
+                color: "#484f58",
+                textAlign: "center",
+              }}
+            >
+              Sin vértices
+            </div>
+          ) : (
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+            >
+              {componentesConColores.map((comp) => (
+                <div
+                  key={comp.id}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "2px",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      fontSize: "12px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        background: comp.color,
+                        display: "inline-block",
+                      }}
+                    />
+                    <span style={{ color: "#e6edf3" }}>
+                      Componente {comp.id}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        color: "#8b949e",
+                        fontWeight: "400",
+                      }}
+                    >
+                      ({comp.vertices.length}{" "}
+                      {comp.vertices.length === 1 ? "vértice" : "vértices"})
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      paddingLeft: "14px",
+                      fontSize: "11px",
+                      color: "#8b949e",
+                      fontFamily: monoStyle.fontFamily,
+                    }}
+                  >
+                    {comp.vertices.join(", ")}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -162,83 +301,179 @@ export default function PanelInfo({ vertices, aristas, verticeSeleccionado }) {
       {openGrados && (
         <div style={cardStyle}>
           {vertices.length === 0 ? (
-            <div style={{ padding: '12px', fontSize: '12px', color: '#484f58', textAlign: 'center' }}>
+            <div
+              style={{
+                padding: "12px",
+                fontSize: "12px",
+                color: "#484f58",
+                textAlign: "center",
+              }}
+            >
               Sin vértices
             </div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid #30363d' }}>
-                  <th style={{ padding: '6px 12px', textAlign: 'left',  fontSize: '11px', color: '#8b949e', fontWeight: '600' }}>Vértice</th>
-                  <th style={{ padding: '6px 12px', textAlign: 'center', fontSize: '11px', color: '#8b949e', fontWeight: '600' }}>Grado</th>
-                  <th style={{ padding: '6px 12px', textAlign: 'left',  fontSize: '11px', color: '#8b949e', fontWeight: '600' }}>Barra</th>
+                <tr style={{ borderBottom: "1px solid #30363d" }}>
+                  <th
+                    style={{
+                      padding: "6px 12px",
+                      textAlign: "left",
+                      fontSize: "11px",
+                      color: "#8b949e",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Vértice
+                  </th>
+                  <th
+                    style={{
+                      padding: "6px 12px",
+                      textAlign: "center",
+                      fontSize: "11px",
+                      color: "#8b949e",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Grado
+                  </th>
+                  <th
+                    style={{
+                      padding: "6px 12px",
+                      textAlign: "left",
+                      fontSize: "11px",
+                      color: "#8b949e",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Barra
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {grados.map((v, i) => {
-                  const pct        = maxGrado > 0 ? (v.grado / maxGrado) * 100 : 0;
-                  const esMax      = v.grado === maxGrado && grados.length > 1;
-                  const esMin      = v.grado === minGrado && grados.length > 1 && minGrado !== maxGrado;
+                  const pct = maxGrado > 0 ? (v.grado / maxGrado) * 100 : 0;
+                  const esMax = v.grado === maxGrado && grados.length > 1;
+                  const esMin =
+                    v.grado === minGrado &&
+                    grados.length > 1 &&
+                    minGrado !== maxGrado;
                   const esSelected = v.id === verticeSeleccionado;
 
                   // Color de la barra y del número según prioridad
-                  const barColor   = esMax ? 'linear-gradient(90deg, #b45309, #f0883e)'
-                                   : esMin ? 'linear-gradient(90deg, #166534, #3fb950)'
-                                   : 'linear-gradient(90deg, #1f6feb, #58a6ff)';
-                  const numColor   = esMax ? '#f0883e' : esMin ? '#3fb950' : '#e6edf3';
+                  const barColor = esMax
+                    ? "linear-gradient(90deg, #b45309, #f0883e)"
+                    : esMin
+                      ? "linear-gradient(90deg, #166534, #3fb950)"
+                      : "linear-gradient(90deg, #1f6feb, #58a6ff)";
+                  const numColor = esMax
+                    ? "#f0883e"
+                    : esMin
+                      ? "#3fb950"
+                      : "#e6edf3";
 
                   // Fondo de la fila
                   const rowBg = esSelected
-                    ? 'rgba(188,140,255,0.08)'
-                    : i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)';
+                    ? "rgba(188,140,255,0.08)"
+                    : i % 2 === 0
+                      ? "transparent"
+                      : "rgba(255,255,255,0.02)";
 
                   return (
                     <tr
                       key={v.id}
                       style={{
-                        background:   rowBg,
-                        borderLeft:   esSelected ? '3px solid #bc8cff' : '3px solid transparent',
-                        transition:   'background 0.2s ease, border-left-color 0.2s ease',
+                        background: rowBg,
+                        borderLeft: esSelected
+                          ? "3px solid #bc8cff"
+                          : "3px solid transparent",
+                        transition:
+                          "background 0.2s ease, border-left-color 0.2s ease",
                       }}
                     >
                       {/* Vértice + badges */}
-                      <td style={{ padding: '5px 12px 5px 9px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <span style={{ ...monoStyle, color: esSelected ? '#bc8cff' : '#58a6ff', fontWeight: '600' }}>
+                      <td style={{ padding: "5px 12px 5px 9px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
+                        >
+                          <span
+                            style={{
+                              ...monoStyle,
+                              color: esSelected ? "#bc8cff" : "#58a6ff",
+                              fontWeight: "600",
+                            }}
+                          >
                             {v.label}
                           </span>
                           {esMax && (
-                            <span style={{
-                              fontSize: '8px', fontWeight: '700', color: '#f0883e',
-                              background: 'rgba(240,136,62,0.15)', border: '1px solid rgba(240,136,62,0.3)',
-                              borderRadius: '3px', padding: '1px 4px', letterSpacing: '0.04em',
-                            }}>MAX</span>
+                            <span
+                              style={{
+                                fontSize: "8px",
+                                fontWeight: "700",
+                                color: "#f0883e",
+                                background: "rgba(240,136,62,0.15)",
+                                border: "1px solid rgba(240,136,62,0.3)",
+                                borderRadius: "3px",
+                                padding: "1px 4px",
+                                letterSpacing: "0.04em",
+                              }}
+                            >
+                              MAX
+                            </span>
                           )}
                           {esMin && (
-                            <span style={{
-                              fontSize: '8px', fontWeight: '700', color: '#3fb950',
-                              background: 'rgba(63,185,80,0.15)', border: '1px solid rgba(63,185,80,0.3)',
-                              borderRadius: '3px', padding: '1px 4px', letterSpacing: '0.04em',
-                            }}>MIN</span>
+                            <span
+                              style={{
+                                fontSize: "8px",
+                                fontWeight: "700",
+                                color: "#3fb950",
+                                background: "rgba(63,185,80,0.15)",
+                                border: "1px solid rgba(63,185,80,0.3)",
+                                borderRadius: "3px",
+                                padding: "1px 4px",
+                                letterSpacing: "0.04em",
+                              }}
+                            >
+                              MIN
+                            </span>
                           )}
                         </div>
                       </td>
 
                       {/* Valor numérico del grado */}
-                      <td style={{ padding: '5px 12px', textAlign: 'center', ...monoStyle, color: numColor, fontWeight: esMax || esMin ? '700' : '400' }}>
+                      <td
+                        style={{
+                          padding: "5px 12px",
+                          textAlign: "center",
+                          ...monoStyle,
+                          color: numColor,
+                          fontWeight: esMax || esMin ? "700" : "400",
+                        }}
+                      >
                         {v.grado}
                       </td>
 
                       {/* Barra de progreso */}
-                      <td style={{ padding: '5px 12px' }}>
-                        <div style={{ height: '6px', borderRadius: '3px', background: '#30363d', overflow: 'hidden' }}>
+                      <td style={{ padding: "5px 12px" }}>
+                        <div
+                          style={{
+                            height: "6px",
+                            borderRadius: "3px",
+                            background: "#30363d",
+                            overflow: "hidden",
+                          }}
+                        >
                           <div
                             style={{
-                              height:       '100%',
-                              width:        `${pct}%`,
-                              background:   barColor,
-                              borderRadius: '3px',
-                              transition:   'width 0.3s ease',
+                              height: "100%",
+                              width: `${pct}%`,
+                              background: barColor,
+                              borderRadius: "3px",
+                              transition: "width 0.3s ease",
                             }}
                           />
                         </div>
@@ -260,23 +495,50 @@ export default function PanelInfo({ vertices, aristas, verticeSeleccionado }) {
         onToggle={() => setOpenLista((o) => !o)}
       />
       {openLista && (
-        <div style={{ ...cardStyle, padding: '10px 12px' }}>
+        <div style={{ ...cardStyle, padding: "10px 12px" }}>
           {vertices.length === 0 ? (
-            <div style={{ fontSize: '12px', color: '#484f58', textAlign: 'center' }}>
+            <div
+              style={{
+                fontSize: "12px",
+                color: "#484f58",
+                textAlign: "center",
+              }}
+            >
               Sin vértices
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
+            >
               {vertices.map((v) => {
                 const vecinos = listaAdyacencia[v.id] || [];
                 return (
-                  <div key={v.id} style={{ display: 'flex', alignItems: 'baseline', gap: '6px', ...monoStyle }}>
-                    <span style={{ color: '#58a6ff', fontWeight: '600', minWidth: '24px' }}>
+                  <div
+                    key={v.id}
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: "6px",
+                      ...monoStyle,
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#58a6ff",
+                        fontWeight: "600",
+                        minWidth: "24px",
+                      }}
+                    >
                       {v.label}
                     </span>
-                    <span style={{ color: '#484f58' }}>→</span>
-                    <span style={{ color: vecinos.length > 0 ? '#e6edf3' : '#484f58', wordBreak: 'break-all' }}>
-                      {vecinos.length > 0 ? vecinos.sort().join(', ') : '∅'}
+                    <span style={{ color: "#484f58" }}>→</span>
+                    <span
+                      style={{
+                        color: vecinos.length > 0 ? "#e6edf3" : "#484f58",
+                        wordBreak: "break-all",
+                      }}
+                    >
+                      {vecinos.length > 0 ? vecinos.sort().join(", ") : "∅"}
                     </span>
                   </div>
                 );
@@ -287,7 +549,7 @@ export default function PanelInfo({ vertices, aristas, verticeSeleccionado }) {
       )}
 
       {/* ── Matriz de adyacencia ─────── */}
-      <SectionHeader
+      {/* <SectionHeader
         title="Matriz de Adyacencia"
         icon="🔢"
         isOpen={openMatriz}
@@ -342,11 +604,24 @@ export default function PanelInfo({ vertices, aristas, verticeSeleccionado }) {
             </table>
           )}
         </div>
-      )}
+      )} */}
 
       {/* Pie */}
-      <div style={{ marginTop: 'auto', paddingTop: '8px', borderTop: '1px solid #21262d' }}>
-        <div style={{ fontSize: '10px', color: '#484f58', textAlign: 'center', lineHeight: 1.5 }}>
+      <div
+        style={{
+          marginTop: "auto",
+          paddingTop: "8px",
+          borderTop: "1px solid #21262d",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "10px",
+            color: "#484f58",
+            textAlign: "center",
+            lineHeight: 1.5,
+          }}
+        >
           G = (V, E) — Grafo no dirigido
         </div>
       </div>

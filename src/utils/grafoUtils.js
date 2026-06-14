@@ -47,12 +47,12 @@ export function generarListaAdyacencia(vertices, aristas) {
     lista[v.id] = [];
   });
 
-  // Llenar vecinos (grafo no dirigido: ambos sentidos)
+  // Llenar vecinos (si es dirigida, solo de origen a destino; si es no dirigida, en ambos sentidos)
   aristas.forEach((a) => {
     if (lista[a.source] !== undefined) {
       lista[a.source].push(a.target);
     }
-    if (lista[a.target] !== undefined) {
+    if (!a.directed && lista[a.target] !== undefined) {
       lista[a.target].push(a.source);
     }
   });
@@ -81,13 +81,15 @@ export function generarMatrizAdyacencia(vertices, aristas) {
     indexMap[v.id] = i;
   });
 
-  // Marcar conexiones (grafo no dirigido: simétrico)
+  // Marcar conexiones (si es dirigida, solo origen -> destino; si es no dirigida, bidireccional/simétrica)
   aristas.forEach((a) => {
     const i = indexMap[a.source];
     const j = indexMap[a.target];
     if (i !== undefined && j !== undefined) {
       matrix[i][j] = 1;
-      matrix[j][i] = 1;
+      if (!a.directed) {
+        matrix[j][i] = 1;
+      }
     }
   });
 
@@ -102,7 +104,10 @@ export function generarMatrizAdyacencia(vertices, aristas) {
  * @param {string} target
  * @returns {string}
  */
-export function generarIdArista(source, target) {
+export function generarIdArista(source, target, directed = false) {
+  if (directed) {
+    return `${source}->${target}`;
+  }
   const [a, b] = [source, target].sort();
   return `${a}-${b}`;
 }
@@ -115,12 +120,21 @@ export function generarIdArista(source, target) {
  * @param {Array}  aristas
  * @returns {boolean}
  */
-export function aristaExiste(source, target, aristas) {
-  return aristas.some(
-    (a) =>
-      (a.source === source && a.target === target) ||
-      (a.source === target && a.target === source)
-  );
+export function aristaExiste(source, target, aristas, directed = false) {
+  return aristas.some((a) => {
+    if (directed) {
+      // Si la que queremos crear es dirigida u -> v, choca si ya hay u -> v dirigida
+      // o si hay una no dirigida entre u y v.
+      if (a.directed) {
+        return a.source === source && a.target === target;
+      } else {
+        return (a.source === source && a.target === target) || (a.source === target && a.target === source);
+      }
+    } else {
+      // Si queremos crear una no dirigida u - v, choca con cualquier arista entre u y v
+      return (a.source === source && a.target === target) || (a.source === target && a.target === source);
+    }
+  });
 }
 
 /**

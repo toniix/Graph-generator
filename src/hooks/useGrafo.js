@@ -34,14 +34,13 @@ export function useGrafo() {
   /**
    * Agrega un nuevo vértice con posición aleatoria en el canvas.
    */
-  const agregarVertice = useCallback(() => {
+  const agregarVertice = useCallback((x, y) => {
     const label = generarEtiquetaVertice(vertices);
     const nuevoVertice = {
       id:    label,
       label,
-      // Posición centrada con variación aleatoria
-      x: 250 + Math.random() * 300,
-      y: 150 + Math.random() * 250,
+      x: x !== undefined ? x : 250 + Math.random() * 300,
+      y: y !== undefined ? y : 150 + Math.random() * 250,
     };
     setVertices((prev) => [...prev, nuevoVertice]);
   }, [vertices]);
@@ -86,7 +85,7 @@ export function useGrafo() {
         const newTarget = a.target === id ? labelTrimmed : a.target;
         return {
           ...a,
-          id:     generarIdArista(newSource, newTarget),
+          id:     generarIdArista(newSource, newTarget, a.directed),
           source: newSource,
           target: newTarget,
         };
@@ -115,14 +114,15 @@ export function useGrafo() {
    * @param {string} target - ID del vértice destino
    */
   const agregarArista = useCallback(
-    (source, target) => {
+    (source, target, directed = false) => {
       if (source === target) return; // No se permiten bucles
-      if (aristaExiste(source, target, aristas)) return;
+      if (aristaExiste(source, target, aristas, directed)) return;
 
       const nuevaArista = {
-        id:     generarIdArista(source, target),
+        id:     generarIdArista(source, target, directed),
         source,
         target,
+        directed,
       };
       setAristas((prev) => [...prev, nuevaArista]);
     },
@@ -137,7 +137,7 @@ export function useGrafo() {
     setAristas((prev) => prev.filter((a) => a.id !== id));
   }, []);
 
-  /* ─── RESET ─────────────────────────────────── */
+  /* ─── RESET / CARGAR ────────────────────────── */
 
   /**
    * Reinicia el grafo a los datos iniciales de ejemplo.
@@ -145,6 +145,14 @@ export function useGrafo() {
   const reiniciarGrafo = useCallback(() => {
     setVertices(initialVertices);
     setAristas(initialAristas);
+  }, []);
+
+  /**
+   * Carga un grafo completo (vértices y aristas).
+   */
+  const cargarGrafo = useCallback((nuevosVertices, nuevasAristas) => {
+    setVertices(nuevosVertices);
+    setAristas(nuevasAristas);
   }, []);
 
   return {
@@ -157,5 +165,6 @@ export function useGrafo() {
     agregarArista,
     eliminarArista,
     reiniciarGrafo,
+    cargarGrafo,
   };
 }
