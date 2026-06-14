@@ -5,17 +5,17 @@
 
 /* ── Contenedor principal del panel ─────────────────── */
 .panel-controles {
-  width: 210px;
-  min-width: 210px;
+  width: 260px;
+  min-width: 260px;
   height: 100%;
   overflow-y: auto;
   background: #161b22;
   border-right: 1px solid #30363d;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px 8px 12px;
-  font-family: Inter, sans-serif;
+  gap: 10px;
+  padding: 14px 10px;
+  font-family: var(--font-pixel);
   box-sizing: border-box;
 
   /* Scrollbar discreta */
@@ -112,7 +112,7 @@
   padding: 7px 10px;
   font-size: 12px;
   font-weight: 500;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-pixel);
   width: 100%;
   text-align: left;
   display: flex;
@@ -194,7 +194,7 @@
   color: #e6edf3;
   padding: 5px 8px;
   font-size: 12px;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-pixel);
   width: 100%;
   outline: none;
   box-sizing: border-box;

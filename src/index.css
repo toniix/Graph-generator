@@ -1,9 +1,24 @@
 @import "tailwindcss";
 
 /* ============================================
+   FUENTES — Geist Pixel Square (Vercel)
+   ============================================ */
+@font-face {
+  font-family: 'GeistPixel';
+  src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
    DESIGN TOKENS — GrafosWeb
    ============================================ */
 :root {
+  /* Fuentes */
+  --font-pixel: 'GeistPixel', 'Courier New', monospace;
+  --font-ui:    'GeistPixel', system-ui, sans-serif;
+
   /* Color palette */
   --color-bg-primary:     #0d1117;
   --color-bg-secondary:   #161b22;
@@ -55,12 +70,13 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-pixel);
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.02em;
 }
 
 /* ============================================
@@ -85,5 +101,5 @@ body {
    MONOSPACE FOR DATA
    ============================================ */
 .font-mono {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-pixel);
 }

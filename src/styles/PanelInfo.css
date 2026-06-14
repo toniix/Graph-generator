@@ -15,7 +15,7 @@
   flex-direction: column;
   gap: 10px;
   padding: 14px 10px;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-pixel);
   box-sizing: border-box;
 }
 
@@ -110,7 +110,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   cursor: pointer;
-  font-family: Inter, sans-serif;
+  font-family: var(--font-pixel);
   transition: background 0.15s ease;
   box-sizing: border-box;
 }
@@ -146,17 +146,17 @@
 /* Acento por sección */
 .info-content-card--componentes {
   border-left-color: #58a6ff;
-  background: rgba(88, 166, 255, 0.03);
+  background: linear-gradient(rgba(88, 166, 255, 0.12), rgba(88, 166, 255, 0.12)), #0d1117;
 }
 
 .info-content-card--grados {
   border-left-color: #f0883e;
-  background: rgba(240, 136, 62, 0.03);
+  background: linear-gradient(rgba(240, 136, 62, 0.12), rgba(240, 136, 62, 0.12)), #0d1117;
 }
 
 .info-content-card--lista {
   border-left-color: #3fb950;
-  background: rgba(63, 185, 80, 0.03);
+  background: linear-gradient(rgba(63, 185, 80, 0.12), rgba(63, 185, 80, 0.12)), #0d1117;
 }
 
 .info-content-card--padded {
@@ -214,7 +214,7 @@
   padding-left: 14px;
   font-size: 11px;
   color: #8b949e;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-pixel);
 }
 
 /* ── Sección: Tabla de Grados ────────────────────────── */
@@ -256,7 +256,7 @@
 .degrees-table__cell-value  {
   padding: 5px 12px;
   text-align: center;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-pixel);
   font-size: 12px;
 }
 .degrees-table__cell-bar { padding: 5px 12px; }
@@ -268,7 +268,7 @@
 }
 
 .vertex-label {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-pixel);
   font-size: 12px;
   font-weight: 600;
 }
@@ -319,7 +319,7 @@
   display: flex;
   align-items: baseline;
   gap: 6px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-pixel);
   font-size: 12px;
 }
 

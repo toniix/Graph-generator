@@ -20,7 +20,7 @@ const cytoscapeStyle = [
       "border-width": 2.5,
       label: "data(label)",
       color: COLORS.nodeLabel,
-      "font-family": "Inter, sans-serif",
+      "font-family": "GeistPixel, monospace",
       "font-size": "14px",
       "font-weight": "600",
       "text-valign": "center",

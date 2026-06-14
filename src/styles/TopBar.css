@@ -91,7 +91,7 @@
 .chip__value {
   font-size: 15px;
   font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-pixel);
   line-height: 1;
 }
 

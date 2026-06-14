@@ -3,7 +3,6 @@ import {
   calcularGradoVertice,
   calcularGradoTotal,
   generarListaAdyacencia,
-  generarMatrizAdyacencia,
 } from "../utils/grafoUtils";
 import "../styles/PanelInfo.css";
 
@@ -38,7 +37,6 @@ export default function PanelInfo({
   const [openComponentes, setOpenComponentes] = useState(true);
   const [openGrados, setOpenGrados] = useState(true);
   const [openLista, setOpenLista] = useState(true);
-  const [openMatriz, setOpenMatriz] = useState(true);
 
   /* ── Métricas derivadas ────────────────────────────────── */
   const gradoTotal = useMemo(() => calcularGradoTotal(aristas), [aristas]);
@@ -64,10 +62,6 @@ export default function PanelInfo({
     [vertices, aristas],
   );
 
-  const { labels: matrizLabels, matrix } = useMemo(
-    () => generarMatrizAdyacencia(vertices, aristas),
-    [vertices, aristas],
-  );
 
   return (
     <aside id="panel-info" className="panel-info">
