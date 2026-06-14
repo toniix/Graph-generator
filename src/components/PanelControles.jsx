@@ -1,9 +1,5 @@
-/**
- * components/PanelControles.jsx
- * Panel izquierdo con herramientas para manipular el grafo.
- */
-
 import { useState } from "react";
+import "../styles/PanelControles.css";
 
 /* ── Sub-componente: Botón de acción ─────────────────────── */
 function ActionButton({
@@ -14,72 +10,13 @@ function ActionButton({
   disabled = false,
   title,
 }) {
-  const variants = {
-    primary: {
-      background: "linear-gradient(135deg, #1f6feb, #388bfd)",
-      color: "#fff",
-      border: "1px solid rgba(88,166,255,0.3)",
-      hoverBg: "linear-gradient(135deg, #388bfd, #58a6ff)",
-    },
-    success: {
-      background: "linear-gradient(135deg, #1a7f37, #2ea043)",
-      color: "#fff",
-      border: "1px solid rgba(63,185,80,0.3)",
-      hoverBg: "linear-gradient(135deg, #2ea043, #3fb950)",
-    },
-    warning: {
-      background: "linear-gradient(135deg, #9e4c00, #d18616)",
-      color: "#fff",
-      border: "1px solid rgba(240,136,62,0.3)",
-      hoverBg: "linear-gradient(135deg, #d18616, #f0883e)",
-    },
-    danger: {
-      background: "linear-gradient(135deg, #7d1a1a, #b91c1c)",
-      color: "#fff",
-      border: "1px solid rgba(248,81,73,0.3)",
-      hoverBg: "linear-gradient(135deg, #b91c1c, #f85149)",
-    },
-    ghost: {
-      background: "transparent",
-      color: "#8b949e",
-      border: "1px solid #30363d",
-      hoverBg: "#21262d",
-    },
-  };
-
-  const v = variants[variant];
-
   return (
     <button
       id={id}
       onClick={onClick}
       disabled={disabled}
       title={title}
-      style={{
-        background: v.background,
-        color: v.color,
-        border: v.border,
-        borderRadius: "8px",
-        padding: "10px 14px",
-        fontSize: "13px",
-        fontWeight: "500",
-        fontFamily: "Inter, sans-serif",
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
-        width: "100%",
-        textAlign: "left",
-        display: "flex",
-        alignItems: "center",
-        gap: "8px",
-        transition: "all 0.15s ease",
-        lineHeight: "1.4",
-      }}
-      onMouseEnter={(e) => {
-        if (!disabled) e.currentTarget.style.background = v.hoverBg;
-      }}
-      onMouseLeave={(e) => {
-        if (!disabled) e.currentTarget.style.background = v.background;
-      }}
+      className={`action-btn action-btn--${variant}`}
     >
       {children}
     </button>
@@ -89,47 +26,12 @@ function ActionButton({
 /* ── Sub-componente: Sección del panel ───────────────────── */
 function PanelSection({ title, icon, children }) {
   return (
-    <div
-      style={{
-        background: "#1c2333",
-        border: "1px solid #30363d",
-        borderRadius: "10px",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          padding: "10px 14px",
-          borderBottom: "1px solid #30363d",
-          background: "#21262d",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-        }}
-      >
-        <span style={{ fontSize: "14px" }}>{icon}</span>
-        <span
-          style={{
-            fontSize: "12px",
-            fontWeight: "600",
-            color: "#8b949e",
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-          }}
-        >
-          {title}
-        </span>
+    <div className="panel-section">
+      <div className="panel-section__header">
+        <span className="panel-section__icon">{icon}</span>
+        <span className="panel-section__title">{title}</span>
       </div>
-      <div
-        style={{
-          padding: "12px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-        }}
-      >
-        {children}
-      </div>
+      <div className="panel-section__body">{children}</div>
     </div>
   );
 }
@@ -169,36 +71,6 @@ export default function PanelControles({
   const [verticeRenViejo, setVerticeRenViejo] = useState("");
   const [aristaEliminar, setAristaEliminar] = useState("");
 
-  const inputStyle = {
-    background: "#0d1117",
-    border: "1px solid #30363d",
-    borderRadius: "6px",
-    color: "#e6edf3",
-    padding: "7px 10px",
-    fontSize: "13px",
-    fontFamily: "Inter, sans-serif",
-    width: "100%",
-    outline: "none",
-  };
-
-  const selectStyle = {
-    ...inputStyle,
-    cursor: "pointer",
-    appearance: "none",
-    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b949e' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "right 10px center",
-    paddingRight: "30px",
-  };
-
-  const labelStyle = {
-    fontSize: "11px",
-    color: "#8b949e",
-    fontWeight: "500",
-    marginBottom: "4px",
-    display: "block",
-  };
-
   /* ── Handlers ──────────────────────────────────────── */
   const handleRenombrar = () => {
     if (!verticeRenViejo || !verticeRenNuevo.trim()) return;
@@ -214,40 +86,11 @@ export default function PanelControles({
   };
 
   return (
-    <aside
-      id="panel-controles"
-      style={{
-        width: "220px",
-        minWidth: "220px",
-        height: "100%",
-        overflowY: "auto",
-        background: "#161b22",
-        borderRight: "1px solid #30363d",
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        padding: "14px 10px",
-      }}
-    >
+    <aside id="panel-controles" className="panel-controles">
       {/* Logo / Título */}
-      <div
-        style={{
-          textAlign: "center",
-          padding: "4px 0 10px",
-          borderBottom: "1px solid #30363d",
-        }}
-      >
-        <div style={{ fontSize: "20px", marginBottom: "2px" }}>🕸️</div>
-        <div
-          style={{
-            fontSize: "13px",
-            fontWeight: "700",
-            color: "#58a6ff",
-            letterSpacing: "-0.01em",
-          }}
-        >
-          Generador de Grafos
-        </div>
+      <div className="panel-controles__header">
+        <div className="panel-controles__logo">🕸️</div>
+        <div className="panel-controles__title">Generador de Grafos</div>
       </div>
 
       {/* ── VÉRTICES ──────────────────── */}
@@ -294,13 +137,13 @@ export default function PanelControles({
         )}
 
         {/* Renombrar vértice */}
-        <div>
-          <label style={labelStyle} htmlFor="sel-renombrar-vertice">
+        <div className="panel-field">
+          <label className="panel-label" htmlFor="sel-renombrar-vertice">
             Renombrar vértice
           </label>
           <select
             id="sel-renombrar-vertice"
-            style={{ ...selectStyle, marginBottom: "6px" }}
+            className="panel-select"
             value={verticeRenViejo}
             onChange={(e) => setVerticeRenViejo(e.target.value)}
           >
@@ -313,7 +156,7 @@ export default function PanelControles({
           </select>
           <input
             id="input-nuevo-nombre"
-            style={{ ...inputStyle, marginBottom: "6px" }}
+            className="panel-input"
             type="text"
             placeholder="Nuevo nombre..."
             maxLength={4}
@@ -355,13 +198,13 @@ export default function PanelControles({
         )}
 
         {/* Eliminar arista */}
-        <div>
-          <label style={labelStyle} htmlFor="sel-eliminar-arista">
+        <div className="panel-field">
+          <label className="panel-label" htmlFor="sel-eliminar-arista">
             Eliminar arista
           </label>
           <select
             id="sel-eliminar-arista"
-            style={selectStyle}
+            className="panel-select"
             value={aristaEliminar}
             onChange={(e) => setAristaEliminar(e.target.value)}
           >
@@ -395,16 +238,7 @@ export default function PanelControles({
       </PanelSection>
 
       {/* Tip */}
-      <div
-        style={{
-          fontSize: "11px",
-          color: "#484f58",
-          textAlign: "center",
-          marginTop: "auto",
-          paddingTop: "8px",
-          lineHeight: "1.5",
-        }}
-      >
+      <div className="panel-controles__tip">
         Doble click en el canvas para eliminar elementos
       </div>
     </aside>

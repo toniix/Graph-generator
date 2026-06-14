@@ -1,11 +1,5 @@
-/**
- * components/GraphRandomGenerator.jsx
- * Panel de generación de grafos aleatorios con diseño de herramienta técnica.
- * Estilado íntegramente con CSS inline de React para evitar dependencias
- * de compilación o configuración de Tailwind CSS.
- */
-
 import { useState, useEffect } from "react";
+import "../styles/GraphRandomGenerator.css";
 
 /**
  * @param {Object} props
@@ -43,178 +37,11 @@ export default function GraphRandomGenerator({
     setNumGenAristas,
   ]);
 
-  /* ── Estilos Inline CSS ───────────────────────────────── */
-  const triggerButtonStyle = {
-    position: "absolute",
-    top: "16px",
-    right: "16px",
-    zIndex: 20,
-    padding: "6px 14px",
-    backgroundColor: "#161b22",
-    border: "1px solid #30363d",
-    borderRadius: "6px",
-    color: "#8b949e",
-    fontSize: "12px",
-    fontWeight: "600",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    gap: "6px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-    transition: "all 0.15s ease",
-    fontFamily: "Inter, system-ui, sans-serif",
-  };
-
-  const containerStyle = {
-    position: "absolute",
-    top: "16px",
-    right: "16px",
-    zIndex: 20,
-    width: "300px",
-    backgroundColor: "#161b22",
-    border: "1px solid #30363d",
-    borderRadius: "8px",
-    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "16px",
-    fontFamily: "Inter, system-ui, sans-serif",
-  };
-
-  const headerStyle = {
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    borderBottom: "1px solid #30363d",
-    paddingBottom: "10px",
-  };
-
-  const titleStyle = {
-    fontSize: "12px",
-    fontWeight: "700",
-    color: "#e6edf3",
-    textTransform: "uppercase",
-    letterSpacing: "0.05em",
-    margin: 0,
-  };
-
-  const subtitleStyle = {
-    fontSize: "10px",
-    color: "#8b949e",
-    marginTop: "2px",
-    display: "block",
-  };
-
-  const closeButtonStyle = {
-    width: "20px",
-    height: "20px",
-    background: "none",
-    border: "none",
-    color: "#8b949e",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "4px",
-    fontSize: "10px",
-    transition: "all 0.15s ease",
-    padding: 0,
-  };
-
-  const sectionLabelStyle = {
-    fontSize: "10px",
-    color: "#8b949e",
-    fontWeight: "700",
-    textTransform: "uppercase",
-    letterSpacing: "0.05em",
-    marginBottom: "6px",
-    display: "block",
-    userSelect: "none",
-  };
-
-  const segmentContainerStyle = {
-    display: "flex",
-    border: "1px solid #30363d",
-    borderRadius: "6px",
-    overflow: "hidden",
-    backgroundColor: "#0d1117",
-  };
-
-  const getSegmentStyle = (active) => ({
-    flex: 1,
-    padding: "6px 0",
-    fontSize: "11px",
-    fontWeight: active ? "700" : "600",
-    backgroundColor: active ? "#21262d" : "transparent",
-    color: active ? "#ffffff" : "#8b949e",
-    border: "none",
-    cursor: "pointer",
-    textAlign: "center",
-    transition: "color 0.15s ease",
-  });
-
-  const pickerContainerStyle = {
-    display: "flex",
-    alignItems: "center",
-    border: "1px solid #30363d",
-    borderRadius: "6px",
-    backgroundColor: "#0d1117",
-    overflow: "hidden",
-  };
-
-  const pickerButtonStyle = {
-    padding: "4px 12px",
-    background: "none",
-    border: "none",
-    color: "#8b949e",
-    fontWeight: "700",
-    fontSize: "14px",
-    cursor: "pointer",
-    transition: "all 0.15s ease",
-    outline: "none",
-  };
-
-  const pickerValueStyle = {
-    padding: "0 12px",
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: "12px",
-    fontWeight: "700",
-    color: "#e6edf3",
-    minWidth: "32px",
-    textAlign: "center",
-    userSelect: "none",
-  };
-
-  const actionButtonStyle = {
-    width: "100%",
-    padding: "10px 0",
-    backgroundColor: "#1f6feb",
-    border: "1px solid #388bfd",
-    borderRadius: "6px",
-    color: "#ffffff",
-    fontSize: "12px",
-    fontWeight: "700",
-    cursor: "pointer",
-    transition: "background-color 0.15s ease",
-    textAlign: "center",
-    marginTop: "6px",
-    fontFamily: "Inter, system-ui, sans-serif",
-  };
-
   if (isCollapsed) {
     return (
       <button
         onClick={() => setIsCollapsed(false)}
-        style={triggerButtonStyle}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = "#ffffff";
-          e.currentTarget.style.borderColor = "#8b949e";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = "#8b949e";
-          e.currentTarget.style.borderColor = "#30363d";
-        }}
+        className="generator-trigger"
         title="Configurar y generar un grafo aleatorio"
       >
         <span>🎲</span> Generador Aleatorio
@@ -223,57 +50,37 @@ export default function GraphRandomGenerator({
   }
 
   return (
-    <div id="random-generator-overlay" style={containerStyle}>
+    <div id="random-generator-overlay" className="generator-panel">
       {/* Cabecera */}
-      <div style={headerStyle}>
+      <div className="generator-panel__header">
         <div>
-          <h3 style={titleStyle}>🎲 Generar Grafo</h3>
-          <span style={subtitleStyle}>
+          <h3 className="generator-panel__title">🎲 Generar Grafo</h3>
+          <span className="generator-panel__subtitle">
             Configura los parámetros del nuevo grafo
           </span>
         </div>
         <button
           onClick={() => setIsCollapsed(true)}
-          style={closeButtonStyle}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-            e.currentTarget.style.color = "#ffffff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "transparent";
-            e.currentTarget.style.color = "#8b949e";
-          }}
+          className="generator-panel__close"
         >
           ✕
         </button>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+      <div className="generator-panel__body">
         {/* Selector de Tipo (Dirigido / No Dirigido) */}
         <div>
-          <span style={sectionLabelStyle}>Tipo de Conexión</span>
-          <div style={segmentContainerStyle}>
+          <span className="generator-label">Tipo de Conexión</span>
+          <div className="generator-segment">
             <button
               onClick={() => setEsDirigido(false)}
-              style={getSegmentStyle(!esDirigido)}
-              onMouseEnter={(e) => {
-                if (esDirigido) e.currentTarget.style.color = "#ffffff";
-              }}
-              onMouseLeave={(e) => {
-                if (esDirigido) e.currentTarget.style.color = "#8b949e";
-              }}
+              className={`generator-segment__btn${!esDirigido ? " generator-segment__btn--active" : ""}`}
             >
               No Dirigido
             </button>
             <button
               onClick={() => setEsDirigido(true)}
-              style={getSegmentStyle(esDirigido)}
-              onMouseEnter={(e) => {
-                if (!esDirigido) e.currentTarget.style.color = "#ffffff";
-              }}
-              onMouseLeave={(e) => {
-                if (!esDirigido) e.currentTarget.style.color = "#8b949e";
-              }}
+              className={`generator-segment__btn${esDirigido ? " generator-segment__btn--active" : ""}`}
             >
               Dirigido
             </button>
@@ -281,45 +88,21 @@ export default function GraphRandomGenerator({
         </div>
 
         {/* Control Vértices */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <span style={sectionLabelStyle}>Vértices</span>
-          <div style={pickerContainerStyle}>
+        <div className="generator-control-row">
+          <span className="generator-label">Vértices</span>
+          <div className="generator-picker">
             <button
               onClick={() => setNumGenVertices((prev) => Math.max(1, prev - 1))}
-              style={pickerButtonStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.05)";
-                e.currentTarget.style.color = "#ffffff";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.color = "#8b949e";
-              }}
+              className="generator-picker__btn"
             >
-              -
+              −
             </button>
-            <span style={pickerValueStyle}>{numGenVertices}</span>
+            <span className="generator-picker__value">{numGenVertices}</span>
             <button
               onClick={() =>
                 setNumGenVertices((prev) => Math.min(30, prev + 1))
               }
-              style={pickerButtonStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.05)";
-                e.currentTarget.style.color = "#ffffff";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.color = "#8b949e";
-              }}
+              className="generator-picker__btn"
             >
               +
             </button>
@@ -327,72 +110,34 @@ export default function GraphRandomGenerator({
         </div>
 
         {/* Control Aristas */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <span style={sectionLabelStyle}>Aristas</span>
-            <div style={pickerContainerStyle}>
+        <div>
+          <div className="generator-control-row">
+            <span className="generator-label">Aristas</span>
+            <div className="generator-picker">
               <button
                 onClick={() =>
                   setNumGenAristas((prev) => Math.max(0, prev - 1))
                 }
-                style={pickerButtonStyle}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    "rgba(255, 255, 255, 0.05)";
-                  e.currentTarget.style.color = "#ffffff";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "#8b949e";
-                }}
+                className="generator-picker__btn"
               >
-                -
+                −
               </button>
-              <span style={pickerValueStyle}>{numGenAristas}</span>
+              <span className="generator-picker__value">{numGenAristas}</span>
               <button
                 onClick={() =>
                   setNumGenAristas((prev) =>
                     Math.min(maxAristasPosibles, prev + 1),
                   )
                 }
-                style={pickerButtonStyle}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    "rgba(255, 255, 255, 0.05)";
-                  e.currentTarget.style.color = "#ffffff";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.color = "#8b949e";
-                }}
+                className="generator-picker__btn"
                 disabled={numGenAristas >= maxAristasPosibles}
               >
                 +
               </button>
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              userSelect: "none",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "9px",
-                color: "#484f58",
-                fontFamily: "'JetBrains Mono', monospace",
-              }}
-            >
-              Máximo para este grafo: {maxAristasPosibles}
-            </span>
+          <div className="generator-max-hint">
+            Máximo para este grafo: {maxAristasPosibles}
           </div>
         </div>
 
@@ -406,13 +151,7 @@ export default function GraphRandomGenerator({
             );
             setIsCollapsed(true);
           }}
-          style={actionButtonStyle}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#388bfd";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "#1f6feb";
-          }}
+          className="generator-action-btn"
         >
           Generar Grafo
         </button>

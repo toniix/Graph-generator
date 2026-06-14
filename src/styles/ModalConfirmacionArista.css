@@ -1,0 +1,167 @@
+/* ─────────────────────────────────────────────────────
+   ModalConfirmacionArista.css
+   Modal para elegir tipo de arista (dirigida / no dirigida)
+───────────────────────────────────────────────────── */
+
+/* ── Keyframes ───────────────────────────────────────── */
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Overlay / Backdrop ──────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 17, 23, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+/* ── Tarjeta del modal ───────────────────────────────── */
+.modal-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Cabecera ─────────────────────────────────────────── */
+.modal-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-card__header-icon {
+  font-size: 20px;
+}
+
+.modal-card__header-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e6edf3;
+}
+
+/* ── Descripción ──────────────────────────────────────── */
+.modal-card__description {
+  font-size: 13px;
+  color: #8b949e;
+  line-height: 1.6;
+}
+
+.modal-card__vertex--source {
+  color: #58a6ff;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.modal-card__vertex--target {
+  color: #bc8cff;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+/* ── Checkbox: Recordar Elección ──────────────────────── */
+.modal-card__remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  color: #8b949e;
+  margin-top: 4px;
+}
+
+.modal-card__checkbox {
+  cursor: pointer;
+  accent-color: #58a6ff;
+}
+
+/* ── Botones de opción ────────────────────────────────── */
+.modal-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Botón: Dirigida */
+.modal-btn--directed {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  background: linear-gradient(135deg, #1f6feb, #388bfd);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: filter 0.15s ease;
+  font-family: Inter, sans-serif;
+}
+
+.modal-btn--directed:hover {
+  filter: brightness(1.1);
+}
+
+/* Botón: No Dirigida */
+.modal-btn--undirected {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  background: #21262d;
+  color: #e6edf3;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s ease;
+  font-family: Inter, sans-serif;
+}
+
+.modal-btn--undirected:hover {
+  background: #2a3441;
+}
+
+/* ── Botón de cancelar ────────────────────────────────── */
+.modal-btn--cancel {
+  background: transparent;
+  border: none;
+  color: #8b949e;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+  padding: 4px 0;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+  font-family: Inter, sans-serif;
+}
+
+.modal-btn--cancel:hover {
+  color: #ff7b72;
+}

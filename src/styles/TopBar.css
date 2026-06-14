@@ -1,0 +1,143 @@
+/* ─────────────────────────────────────────────────────
+   TopBar.css
+   Chips de estadísticas flotantes sobre el canvas
+───────────────────────────────────────────────────── */
+
+/* ── Keyframes ───────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%);  }
+}
+
+/* ── Contenedor del overlay ──────────────────────────── */
+.topbar-overlay {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  width: max-content;
+}
+
+/* Fila de chips */
+.topbar-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Fila de hints secundarios */
+.topbar-hints-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  pointer-events: auto;
+}
+
+/* ── Chip base ───────────────────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Chip normal (sin accent) */
+.chip--default {
+  background: rgba(22, 27, 34, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Chip con accent (vértice seleccionado) */
+.chip--accent {
+  /* background y border se ponen vía style inline porque dependen del color dinámico */
+}
+
+/* Shimmer animado */
+.chip__shimmer {
+  position: absolute;
+  inset: 0;
+  /* background se pone inline porque depende del color */
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Partes del chip */
+.chip__icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.chip__label {
+  font-size: 12px;
+  color: #8b949e;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chip__value {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+}
+
+.chip__value--default { color: #e6edf3; }
+/* color accent se pone inline */
+
+.chip__badge {
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 1px 5px;
+  letter-spacing: 0.05em;
+  /* colores se ponen inline */
+}
+
+/* ── Hints / Pills secundarios ───────────────────────── */
+.topbar-hint {
+  font-size: 10px;
+  color: #8b949e;
+  background: rgba(22, 27, 34, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 3px 10px;
+  pointer-events: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.topbar-stat-pill {
+  font-size: 10px;
+  border-radius: 4px;
+  padding: 2px 7px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.topbar-stat-pill--max {
+  color: #f0883e;
+  background: rgba(240, 136, 62, 0.12);
+  border: 1px solid rgba(240, 136, 62, 0.25);
+}
+
+.topbar-stat-pill--min {
+  color: #3fb950;
+  background: rgba(63, 185, 80, 0.12);
+  border: 1px solid rgba(63, 185, 80, 0.25);
+}

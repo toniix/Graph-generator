@@ -1,12 +1,3 @@
-/**
- * components/PanelInfo.jsx
- * Panel derecho con análisis del grafo:
- * - Estadísticas generales
- * - Grados por vértice
- * - Lista de adyacencia
- * - Matriz de adyacencia
- */
-
 import { useMemo, useState } from "react";
 import {
   calcularGradoVertice,
@@ -14,41 +5,17 @@ import {
   generarListaAdyacencia,
   generarMatrizAdyacencia,
 } from "../utils/grafoUtils";
+import "../styles/PanelInfo.css";
 
 /* ── Sub-componente: Cabecera de sección ─────────────────── */
 function SectionHeader({ title, icon, isOpen, onToggle }) {
   return (
-    <button
-      onClick={onToggle}
-      style={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "8px 12px",
-        background: "#21262d",
-        border: "1px solid #30363d",
-        borderRadius: "8px",
-        color: "#8b949e",
-        fontSize: "11px",
-        fontWeight: "600",
-        textTransform: "uppercase",
-        letterSpacing: "0.06em",
-        cursor: "pointer",
-        fontFamily: "Inter, sans-serif",
-        transition: "background 0.15s ease",
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.background = "#2a3441")}
-      onMouseLeave={(e) => (e.currentTarget.style.background = "#21262d")}
-    >
-      <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+    <button onClick={onToggle} className="section-header">
+      <span className="section-header__left">
         <span>{icon}</span> {title}
       </span>
       <span
-        style={{
-          transform: isOpen ? "rotate(180deg)" : "none",
-          transition: "transform 0.2s ease",
-        }}
+        className={`section-header__chevron${isOpen ? " section-header__chevron--open" : ""}`}
       >
         ▾
       </span>
@@ -102,111 +69,29 @@ export default function PanelInfo({
     [vertices, aristas],
   );
 
-  /* ── Estilos compartidos ───────────────────────────────── */
-  const cardStyle = {
-    background: "#21262d",
-    border: "1px solid #30363d",
-    borderRadius: "8px",
-    overflowY: "auto",
-    maxHeight: "180px",
-  };
-
-  const monoStyle = {
-    fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-    fontSize: "12px",
-  };
-
   return (
-    <aside
-      id="panel-info"
-      style={{
-        width: "260px",
-        minWidth: "260px",
-        height: "100%",
-        overflowY: "auto",
-        background: "#161b22",
-        borderLeft: "1px solid #30363d",
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        padding: "14px 10px",
-      }}
-    >
+    <aside id="panel-info" className="panel-info">
       {/* Título */}
-      <div
-        style={{ padding: "4px 4px 10px", borderBottom: "1px solid #30363d" }}
-      >
-        <div style={{ fontSize: "13px", fontWeight: "700", color: "#e6edf3" }}>
-          Análisis del Grafo
-        </div>
-        <div style={{ fontSize: "11px", color: "#484f58", marginTop: "2px" }}>
-          Actualización en tiempo real
-        </div>
+      <div className="panel-info__header">
+        <div className="panel-info__title">Análisis del Grafo</div>
+        <div className="panel-info__subtitle">Actualización en tiempo real</div>
       </div>
 
       {/* Tarjeta de Componentes Conexas */}
-      <div
-        style={{
-          background: "#21262d",
-          border: "1px solid rgba(88, 166, 255, 0.2)",
-          borderRadius: "8px",
-          padding: "10px 12px",
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "18px",
-            width: "34px",
-            height: "34px",
-            borderRadius: "8px",
-            background: "rgba(88, 166, 255, 0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-            color: "#58a6ff",
-          }}
-        >
-          🧩
-        </div>
+      <div className="info-card--components">
+        <div className="info-card__icon">🧩</div>
         <div>
-          <div
-            style={{
-              fontSize: "20px",
-              fontWeight: "700",
-              color: "#e6edf3",
-              lineHeight: 1,
-            }}
-          >
-            {componentesConColores.length}
-          </div>
-          <div style={{ fontSize: "11px", color: "#8b949e", marginTop: "2px" }}>
-            Componentes conexas
-          </div>
+          <div className="info-card__count">{componentesConColores.length}</div>
+          <div className="info-card__label">Componentes conexas</div>
         </div>
       </div>
 
       {/* Teorema del apretón de manos */}
       {aristas.length > 0 && (
-        <div
-          style={{
-            background: "rgba(240,136,62,0.08)",
-            border: "1px solid rgba(240,136,62,0.2)",
-            borderRadius: "8px",
-            padding: "8px 10px",
-            fontSize: "11px",
-            color: "#8b949e",
-            lineHeight: 1.5,
-          }}
-        >
-          <span style={{ color: "#f0883e", fontWeight: "600" }}>
-            📐 Teorema:
-          </span>{" "}
-          Grado total = 2 × |E| = 2 × {aristas.length} ={" "}
-          <strong style={{ color: "#f0883e" }}>{gradoTotal}</strong>
+        <div className="info-theorem">
+          <span className="info-theorem__label">📐 Teorema:</span> Grado total =
+          2 × |E| = 2 × {aristas.length} ={" "}
+          <strong className="info-theorem__value">{gradoTotal}</strong>
         </div>
       )}
 
@@ -218,70 +103,27 @@ export default function PanelInfo({
         onToggle={() => setOpenComponentes((o) => !o)}
       />
       {openComponentes && (
-        <div style={{ ...cardStyle, padding: "10px 12px" }}>
+        <div className="info-content-card info-content-card--componentes info-content-card--padded">
           {vertices.length === 0 ? (
-            <div
-              style={{
-                fontSize: "12px",
-                color: "#484f58",
-                textAlign: "center",
-              }}
-            >
-              Sin vértices
-            </div>
+            <div className="info-empty">Sin vértices</div>
           ) : (
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
-            >
+            <div className="components-list">
               {componentesConColores.map((comp) => (
-                <div
-                  key={comp.id}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "2px",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      fontSize: "12px",
-                      fontWeight: "600",
-                    }}
-                  >
+                <div key={comp.id} className="component-item">
+                  <div className="component-item__header">
                     <span
-                      style={{
-                        width: "8px",
-                        height: "8px",
-                        borderRadius: "50%",
-                        background: comp.color,
-                        display: "inline-block",
-                      }}
+                      className="component-item__dot"
+                      style={{ background: comp.color }}
                     />
-                    <span style={{ color: "#e6edf3" }}>
+                    <span className="component-item__name">
                       Componente {comp.id}
                     </span>
-                    <span
-                      style={{
-                        fontSize: "10px",
-                        color: "#8b949e",
-                        fontWeight: "400",
-                      }}
-                    >
+                    <span className="component-item__count">
                       ({comp.vertices.length}{" "}
                       {comp.vertices.length === 1 ? "vértice" : "vértices"})
                     </span>
                   </div>
-                  <div
-                    style={{
-                      paddingLeft: "14px",
-                      fontSize: "11px",
-                      color: "#8b949e",
-                      fontFamily: monoStyle.fontFamily,
-                    }}
-                  >
+                  <div className="component-item__vertices">
                     {comp.vertices.join(", ")}
                   </div>
                 </div>
@@ -299,55 +141,16 @@ export default function PanelInfo({
         onToggle={() => setOpenGrados((o) => !o)}
       />
       {openGrados && (
-        <div style={cardStyle}>
+        <div className="info-content-card info-content-card--grados">
           {vertices.length === 0 ? (
-            <div
-              style={{
-                padding: "12px",
-                fontSize: "12px",
-                color: "#484f58",
-                textAlign: "center",
-              }}
-            >
-              Sin vértices
-            </div>
+            <div className="info-empty">Sin vértices</div>
           ) : (
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <table className="degrees-table">
               <thead>
-                <tr style={{ borderBottom: "1px solid #30363d" }}>
-                  <th
-                    style={{
-                      padding: "6px 12px",
-                      textAlign: "left",
-                      fontSize: "11px",
-                      color: "#8b949e",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Vértice
-                  </th>
-                  <th
-                    style={{
-                      padding: "6px 12px",
-                      textAlign: "center",
-                      fontSize: "11px",
-                      color: "#8b949e",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Grado
-                  </th>
-                  <th
-                    style={{
-                      padding: "6px 12px",
-                      textAlign: "left",
-                      fontSize: "11px",
-                      color: "#8b949e",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Barra
-                  </th>
+                <tr>
+                  <th>Vértice</th>
+                  <th>Grado</th>
+                  <th>Barra</th>
                 </tr>
               </thead>
               <tbody>
@@ -360,84 +163,51 @@ export default function PanelInfo({
                     minGrado !== maxGrado;
                   const esSelected = v.id === verticeSeleccionado;
 
-                  // Color de la barra y del número según prioridad
+                  // Color de la barra
                   const barColor = esMax
                     ? "linear-gradient(90deg, #b45309, #f0883e)"
                     : esMin
                       ? "linear-gradient(90deg, #166534, #3fb950)"
                       : "linear-gradient(90deg, #1f6feb, #58a6ff)";
+
+                  // Color del número
                   const numColor = esMax
                     ? "#f0883e"
                     : esMin
                       ? "#3fb950"
                       : "#e6edf3";
 
-                  // Fondo de la fila
-                  const rowBg = esSelected
-                    ? "rgba(188,140,255,0.08)"
-                    : i % 2 === 0
-                      ? "transparent"
-                      : "rgba(255,255,255,0.02)";
+                  // Clase de la fila
+                  const rowClass = [
+                    "degrees-table__row",
+                    esSelected
+                      ? "degrees-table__row--selected"
+                      : "degrees-table__row--normal",
+                    !esSelected && i % 2 !== 0 ? "degrees-table__row--odd" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ");
 
                   return (
-                    <tr
-                      key={v.id}
-                      style={{
-                        background: rowBg,
-                        borderLeft: esSelected
-                          ? "3px solid #bc8cff"
-                          : "3px solid transparent",
-                        transition:
-                          "background 0.2s ease, border-left-color 0.2s ease",
-                      }}
-                    >
+                    <tr key={v.id} className={rowClass}>
                       {/* Vértice + badges */}
-                      <td style={{ padding: "5px 12px 5px 9px" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "5px",
-                          }}
-                        >
+                      <td className="degrees-table__cell-vertex">
+                        <div className="vertex-cell">
                           <span
+                            className="vertex-label"
                             style={{
-                              ...monoStyle,
                               color: esSelected ? "#bc8cff" : "#58a6ff",
-                              fontWeight: "600",
                             }}
                           >
                             {v.label}
                           </span>
                           {esMax && (
-                            <span
-                              style={{
-                                fontSize: "8px",
-                                fontWeight: "700",
-                                color: "#f0883e",
-                                background: "rgba(240,136,62,0.15)",
-                                border: "1px solid rgba(240,136,62,0.3)",
-                                borderRadius: "3px",
-                                padding: "1px 4px",
-                                letterSpacing: "0.04em",
-                              }}
-                            >
+                            <span className="degree-badge degree-badge--max">
                               MAX
                             </span>
                           )}
                           {esMin && (
-                            <span
-                              style={{
-                                fontSize: "8px",
-                                fontWeight: "700",
-                                color: "#3fb950",
-                                background: "rgba(63,185,80,0.15)",
-                                border: "1px solid rgba(63,185,80,0.3)",
-                                borderRadius: "3px",
-                                padding: "1px 4px",
-                                letterSpacing: "0.04em",
-                              }}
-                            >
+                            <span className="degree-badge degree-badge--min">
                               MIN
                             </span>
                           )}
@@ -446,10 +216,8 @@ export default function PanelInfo({
 
                       {/* Valor numérico del grado */}
                       <td
+                        className="degrees-table__cell-value"
                         style={{
-                          padding: "5px 12px",
-                          textAlign: "center",
-                          ...monoStyle,
                           color: numColor,
                           fontWeight: esMax || esMin ? "700" : "400",
                         }}
@@ -458,23 +226,11 @@ export default function PanelInfo({
                       </td>
 
                       {/* Barra de progreso */}
-                      <td style={{ padding: "5px 12px" }}>
-                        <div
-                          style={{
-                            height: "6px",
-                            borderRadius: "3px",
-                            background: "#30363d",
-                            overflow: "hidden",
-                          }}
-                        >
+                      <td className="degrees-table__cell-bar">
+                        <div className="degree-bar-track">
                           <div
-                            style={{
-                              height: "100%",
-                              width: `${pct}%`,
-                              background: barColor,
-                              borderRadius: "3px",
-                              transition: "width 0.3s ease",
-                            }}
+                            className="degree-bar-fill"
+                            style={{ width: `${pct}%`, background: barColor }}
                           />
                         </div>
                       </td>
@@ -495,48 +251,23 @@ export default function PanelInfo({
         onToggle={() => setOpenLista((o) => !o)}
       />
       {openLista && (
-        <div style={{ ...cardStyle, padding: "10px 12px" }}>
+        <div className="info-content-card info-content-card--lista info-content-card--padded">
           {vertices.length === 0 ? (
-            <div
-              style={{
-                fontSize: "12px",
-                color: "#484f58",
-                textAlign: "center",
-              }}
-            >
-              Sin vértices
-            </div>
+            <div className="info-empty">Sin vértices</div>
           ) : (
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-            >
+            <div className="adjacency-list">
               {vertices.map((v) => {
                 const vecinos = listaAdyacencia[v.id] || [];
                 return (
-                  <div
-                    key={v.id}
-                    style={{
-                      display: "flex",
-                      alignItems: "baseline",
-                      gap: "6px",
-                      ...monoStyle,
-                    }}
-                  >
+                  <div key={v.id} className="adjacency-row">
+                    <span className="adjacency-row__key">{v.label}</span>
+                    <span className="adjacency-row__arrow">→</span>
                     <span
-                      style={{
-                        color: "#58a6ff",
-                        fontWeight: "600",
-                        minWidth: "24px",
-                      }}
-                    >
-                      {v.label}
-                    </span>
-                    <span style={{ color: "#484f58" }}>→</span>
-                    <span
-                      style={{
-                        color: vecinos.length > 0 ? "#e6edf3" : "#484f58",
-                        wordBreak: "break-all",
-                      }}
+                      className={
+                        vecinos.length > 0
+                          ? "adjacency-row__value--filled"
+                          : "adjacency-row__value--empty"
+                      }
                     >
                       {vecinos.length > 0 ? vecinos.sort().join(", ") : "∅"}
                     </span>
@@ -548,80 +279,12 @@ export default function PanelInfo({
         </div>
       )}
 
-      {/* ── Matriz de adyacencia ─────── */}
-      {/* <SectionHeader
-        title="Matriz de Adyacencia"
-        icon="🔢"
-        isOpen={openMatriz}
-        onToggle={() => setOpenMatriz((o) => !o)}
-      />
-      {openMatriz && (
-        <div style={{ ...cardStyle, padding: '10px', overflowX: 'auto' }}>
-          {vertices.length === 0 ? (
-            <div style={{ fontSize: '12px', color: '#484f58', textAlign: 'center' }}>
-              Sin vértices
-            </div>
-          ) : vertices.length > 12 ? (
-            <div style={{ fontSize: '12px', color: '#8b949e', textAlign: 'center', padding: '8px' }}>
-              Matriz disponible para grafos con ≤ 12 vértices
-            </div>
-          ) : (
-            <table style={{ borderCollapse: 'collapse', ...monoStyle, fontSize: '11px', margin: '0 auto' }}>
-              <thead>
-                <tr>
-                  <th style={{ width: '22px' }} />
-                  {matrizLabels.map((l) => (
-                    <th key={l} style={{ padding: '3px 4px', color: '#58a6ff', fontWeight: '600', textAlign: 'center' }}>
-                      {l}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {matrix.map((fila, i) => (
-                  <tr key={matrizLabels[i]}>
-                    <td style={{ padding: '3px 4px', color: '#58a6ff', fontWeight: '600', textAlign: 'right', paddingRight: '8px' }}>
-                      {matrizLabels[i]}
-                    </td>
-                    {fila.map((val, j) => (
-                      <td
-                        key={j}
-                        style={{
-                          padding:     '3px 4px',
-                          textAlign:   'center',
-                          color:       val === 1 ? '#3fb950' : '#30363d',
-                          fontWeight:  val === 1 ? '700' : '400',
-                          background:  i === j ? 'rgba(255,255,255,0.03)' : 'transparent',
-                          borderRadius:'3px',
-                        }}
-                      >
-                        {val}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-      )} */}
+      {/* ── Matriz de adyacencia (comentada) ─────── */}
+      {/* <SectionHeader ... /> */}
 
       {/* Pie */}
-      <div
-        style={{
-          marginTop: "auto",
-          paddingTop: "8px",
-          borderTop: "1px solid #21262d",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "10px",
-            color: "#484f58",
-            textAlign: "center",
-            lineHeight: 1.5,
-          }}
-        >
+      <div className="panel-info__footer">
+        <div className="panel-info__footer-text">
           G = (V, E) — Grafo no dirigido
         </div>
       </div>

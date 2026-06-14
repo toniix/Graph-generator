@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
+import "../styles/GrafoPage.css";
 import { useGrafo } from "../hooks/useGrafo";
 import GrafoCanvas from "../components/GrafoCanvas";
 import PanelControles from "../components/PanelControles";
@@ -268,16 +269,7 @@ export default function GrafoPage() {
   }, [modoVertice, modoArista, modoEliminarVertice, pendingEdge, handleCancelarVertice, handleCancelarArista, handleCancelarEliminarVertice, handleCancelEdgeCreation]);
 
   return (
-    <div
-      id="grafo-page"
-      style={{
-        display: "flex",
-        height: "100vh",
-        width: "100vw",
-        overflow: "hidden",
-        background: "#0d1117",
-      }}
-    >
+    <div id="grafo-page" className="grafo-page">
       {/* Panel izquierdo — Controles */}
       <PanelControles
         vertices={vertices}
@@ -297,10 +289,7 @@ export default function GrafoPage() {
       />
 
       {/* Área central: Canvas con chips flotantes */}
-      <main
-        id="grafo-canvas-area"
-        style={{ flex: 1, position: "relative", overflow: "hidden" }}
-      >
+      <main id="grafo-canvas-area" className="grafo-page__canvas-area">
         {/* Barra superior con chips flotantes (centro) */}
         <TopBar
           vertices={vertices}

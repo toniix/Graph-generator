@@ -1,22 +1,13 @@
-/**
- * components/GrafoCanvas.jsx
- * Canvas principal que renderiza el grafo con Cytoscape.js.
- * Gestiona la sincronización bidireccional entre el estado React y Cytoscape.
- */
-
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
+import "../styles/GrafoCanvas.css";
 
 /* ── Paleta de colores del tema ─────────────────────────────── */
 const COLORS = {
   nodeBg: "#1c2333",
-  nodeBorder: "#58a6ff",
   nodeSelected: "#bc8cff",
-  nodeHover: "#388bfd",
   nodeLabel: "#e6edf3",
-  edgeColor: "#444c56",
   edgeSelected: "#f0883e",
-  bgCanvas: "#0d1117",
 };
 
 /* ── Estilos de Cytoscape ───────────────────────────────────── */
@@ -36,12 +27,7 @@ const cytoscapeStyle = [
       "text-halign": "center",
       width: 44,
       height: 44,
-      "shadow-blur": 12,
-      "shadow-color": "data(color)",
-      "shadow-opacity": 0.4,
-      "shadow-offset-x": 0,
-      "shadow-offset-y": 0,
-      "transition-property": "background-color, border-color, shadow-blur",
+      "transition-property": "background-color, border-color",
       "transition-duration": "0.15s",
     },
   },
@@ -50,10 +36,7 @@ const cytoscapeStyle = [
     style: {
       "background-color": "#2a3441",
       "border-color": COLORS.nodeSelected,
-      "border-width": 3,
-      "shadow-color": COLORS.nodeSelected,
-      "shadow-opacity": 0.6,
-      "shadow-blur": 20,
+      "border-width": 3.5,
     },
   },
   {
@@ -97,19 +80,17 @@ const cytoscapeStyle = [
     },
   },
   {
-    selector: 'node.deleting-mode',
+    selector: "node.deleting-mode",
     style: {
-      'border-color': '#ff7b72',
-      'shadow-color': '#ff7b72',
-      'shadow-opacity': 0.6,
+      "border-color": "#ff7b72",
+      "border-width": 3,
     },
   },
   {
     selector: ".highlighted",
     style: {
       "border-color": "#3fb950",
-      "shadow-color": "#3fb950",
-      "shadow-opacity": 0.5,
+      "border-width": 3,
     },
   },
 ];
@@ -200,7 +181,7 @@ export default function GrafoCanvas({
     const handlerNodo = (evt) => {
       const nodeId = evt.target.id();
       // Si estamos en modo de eliminar, eliminamos el vértice de inmediato
-      if (modoEliminarVertice === 'deleting') {
+      if (modoEliminarVertice === "deleting") {
         onEliminarVertice?.(nodeId);
         return;
       }
@@ -247,8 +228,8 @@ export default function GrafoCanvas({
   /* ── Actualizar cursor según modo ───────────────────────────── */
   useEffect(() => {
     if (!containerRef.current) return;
-    if (modoEliminarVertice === 'deleting') {
-      containerRef.current.style.cursor = 'pointer';
+    if (modoEliminarVertice === "deleting") {
+      containerRef.current.style.cursor = "pointer";
     } else if (modoVertice === "adding") {
       containerRef.current.style.cursor = "cell";
     } else if (modoArista !== "none") {
@@ -273,10 +254,10 @@ export default function GrafoCanvas({
   useEffect(() => {
     const cy = cyRef.current;
     if (!cy) return;
-    if (modoEliminarVertice === 'deleting') {
-      cy.nodes().addClass('deleting-mode');
+    if (modoEliminarVertice === "deleting") {
+      cy.nodes().addClass("deleting-mode");
     } else {
-      cy.nodes().removeClass('deleting-mode');
+      cy.nodes().removeClass("deleting-mode");
     }
   }, [modoEliminarVertice, vertices]);
 
@@ -353,65 +334,35 @@ export default function GrafoCanvas({
   }, [vertices, aristas]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="canvas-root">
       {/* Canvas Cytoscape */}
       <div
         ref={containerRef}
         id="cytoscape-canvas"
-        className="w-full h-full"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 50%, #161b22 0%, #0d1117 100%)",
-        }}
+        className="cytoscape-canvas"
       />
 
       {/* Indicador de modo vértice */}
       {modoVertice === "adding" && (
-        <div
-          className="absolute top-4 left-4 px-4 py-3 rounded-md text-sm font-medium pointer-events-none flex flex-col items-start shadow-lg"
-          style={{
-            background: "rgba(56,139,253,0.15)",
-            border: "1px solid rgba(56,139,253,0.4)",
-            color: "#58a6ff",
-            backdropFilter: "blur(8px)",
-            zIndex: 10,
-          }}
-        >
-          <span className="font-semibold">➕ Modo Añadir Vértice</span>
-          <span className="text-xs opacity-80 mt-1">
+        <div className="canvas-mode-banner canvas-mode-banner--add-vertex">
+          <span className="banner-title">➕ Modo Añadir Vértice</span>
+          <span className="banner-hint">
             Haz click en el canvas para colocar (Esc para salir)
           </span>
         </div>
       )}
 
       {/* Indicador de modo eliminar vértice */}
-      {modoEliminarVertice === 'deleting' && (
-        <div
-          className="absolute top-4 left-4 px-4 py-2 rounded-full text-sm font-medium pointer-events-none"
-          style={{
-            background: 'rgba(248,81,73,0.15)',
-            border:     '1px solid rgba(248,81,73,0.4)',
-            color:      '#ff7b72',
-            backdropFilter: 'blur(8px)',
-            zIndex:     10,
-          }}
-        >
-          🗑️ Modo Eliminar Vértice: Haz click en un vértice para eliminarlo (Esc para salir)
+      {modoEliminarVertice === "deleting" && (
+        <div className="canvas-mode-banner canvas-mode-banner--delete-vertex">
+          🗑️ Modo Eliminar Vértice: Haz click en un vértice para eliminarlo (Esc
+          para salir)
         </div>
       )}
 
       {/* Indicador de modo arista */}
       {modoArista !== "none" && (
-        <div
-          className="absolute top-4 left-4 px-4 py-2 rounded-full text-sm font-medium pointer-events-none"
-          style={{
-            background: "rgba(88,166,255,0.15)",
-            border: "1px solid rgba(88,166,255,0.4)",
-            color: "#58a6ff",
-            backdropFilter: "blur(8px)",
-            zIndex: 10,
-          }}
-        >
+        <div className="canvas-mode-banner canvas-mode-banner--edge">
           {modoArista === "selecting-source"
             ? "🔵 Haz click en el vértice de origen (Esc para salir)"
             : `🟢 Origen: ${aristaSource} — Haz click en el vértice destino (Esc para salir)`}
@@ -419,10 +370,7 @@ export default function GrafoCanvas({
       )}
 
       {/* Leyenda de atajos */}
-      <div
-        className="absolute bottom-4 right-4 text-xs space-y-1 pointer-events-none"
-        style={{ color: "rgba(139,148,158,0.7)" }}
-      >
+      <div className="canvas-legend">
         <div>🖱️ Arrastrar — mover vértice</div>
         <div>✌️ Doble click — eliminar elemento</div>
         <div>🔍 Scroll — zoom</div>

@@ -1,0 +1,232 @@
+/* ─────────────────────────────────────────────────────
+   GraphRandomGenerator.css
+   Panel flotante para generación de grafos aleatorios
+───────────────────────────────────────────────────── */
+
+/* ── Botón disparador (estado colapsado) ─────────────── */
+.generator-trigger {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  padding: 6px 14px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #8b949e;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: color 0.15s ease, border-color 0.15s ease;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.generator-trigger:hover {
+  color: #ffffff;
+  border-color: #8b949e;
+}
+
+/* ── Panel expandido ─────────────────────────────────── */
+.generator-panel {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  width: 300px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* ── Cabecera del panel ───────────────────────────────── */
+.generator-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid #30363d;
+  padding-bottom: 10px;
+}
+
+.generator-panel__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e6edf3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.generator-panel__subtitle {
+  font-size: 10px;
+  color: #8b949e;
+  margin-top: 2px;
+  display: block;
+}
+
+/* Botón cerrar */
+.generator-panel__close {
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  color: #8b949e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 10px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.generator-panel__close:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+/* ── Cuerpo del panel ─────────────────────────────────── */
+.generator-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Etiqueta de sección ──────────────────────────────── */
+.generator-label {
+  font-size: 10px;
+  color: #8b949e;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  display: block;
+  user-select: none;
+}
+
+/* ── Selector de tipo (segmented control) ────────────── */
+.generator-segment {
+  display: flex;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #0d1117;
+}
+
+.generator-segment__btn {
+  flex: 1;
+  padding: 6px 0;
+  font-size: 11px;
+  font-weight: 600;
+  background-color: transparent;
+  color: #8b949e;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: color 0.15s ease, background-color 0.15s ease, font-weight 0.15s ease;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.generator-segment__btn:hover {
+  color: #ffffff;
+}
+
+.generator-segment__btn--active {
+  background-color: #21262d;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* ── Fila de control (label + picker) ────────────────── */
+.generator-control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Number Picker ────────────────────────────────────── */
+.generator-picker {
+  display: flex;
+  align-items: center;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  background-color: #0d1117;
+  overflow: hidden;
+}
+
+.generator-picker__btn {
+  padding: 4px 12px;
+  background: none;
+  border: none;
+  color: #8b949e;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  outline: none;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.generator-picker__btn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.generator-picker__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.generator-picker__value {
+  padding: 0 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #e6edf3;
+  min-width: 32px;
+  text-align: center;
+  user-select: none;
+}
+
+/* ── Máximo de aristas ────────────────────────────────── */
+.generator-max-hint {
+  display: flex;
+  justify-content: flex-end;
+  user-select: none;
+  font-size: 9px;
+  color: #484f58;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 4px;
+}
+
+/* ── Botón generar ────────────────────────────────────── */
+.generator-action-btn {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #1f6feb;
+  border: 1px solid #388bfd;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  text-align: center;
+  margin-top: 6px;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.generator-action-btn:hover {
+  background-color: #388bfd;
+}

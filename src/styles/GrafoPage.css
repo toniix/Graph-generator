@@ -1,0 +1,18 @@
+/* ─────────────────────────────────────────────────────
+   GrafoPage.css
+   Layout raíz de la página del grafo
+───────────────────────────────────────────────────── */
+
+.grafo-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #0d1117;
+}
+
+.grafo-page__canvas-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}

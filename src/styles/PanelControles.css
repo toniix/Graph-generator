@@ -1,0 +1,225 @@
+/* ─────────────────────────────────────────────────────
+   PanelControles.css
+   Panel izquierdo de herramientas del grafo
+───────────────────────────────────────────────────── */
+
+/* ── Contenedor principal del panel ─────────────────── */
+.panel-controles {
+  width: 210px;
+  min-width: 210px;
+  height: 100%;
+  overflow-y: auto;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 8px 12px;
+  font-family: Inter, sans-serif;
+  box-sizing: border-box;
+
+  /* Scrollbar discreta */
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+
+.panel-controles::-webkit-scrollbar {
+  width: 4px;
+}
+
+.panel-controles::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.panel-controles::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+/* ── Cabecera / Logo ─────────────────────────────────── */
+.panel-controles__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 4px 8px;
+  border-bottom: 1px solid #30363d;
+}
+
+.panel-controles__logo {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.panel-controles__title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #58a6ff;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* ── Pie informativo ─────────────────────────────────── */
+.panel-controles__tip {
+  font-size: 10px;
+  color: #484f58;
+  text-align: center;
+  margin-top: auto;
+  padding-top: 6px;
+  line-height: 1.5;
+}
+
+/* ── Sub-componente: Sección ─────────────────────────── */
+.panel-section {
+  background: #1c2333;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panel-section__header {
+  padding: 7px 10px;
+  border-bottom: 1px solid #30363d;
+  background: #21262d;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.panel-section__icon {
+  font-size: 11px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.panel-section__title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.panel-section__body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Sub-componente: ActionButton ────────────────────── */
+.action-btn {
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: Inter, sans-serif;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  line-height: 1.3;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.action-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* Variantes de color */
+.action-btn--primary {
+  background: linear-gradient(135deg, #1f6feb, #388bfd);
+  color: #fff;
+  border: 1px solid rgba(88, 166, 255, 0.3);
+}
+.action-btn--primary:not(:disabled):hover {
+  background: linear-gradient(135deg, #388bfd, #58a6ff);
+}
+
+.action-btn--success {
+  background: linear-gradient(135deg, #1a7f37, #2ea043);
+  color: #fff;
+  border: 1px solid rgba(63, 185, 80, 0.3);
+}
+.action-btn--success:not(:disabled):hover {
+  background: linear-gradient(135deg, #2ea043, #3fb950);
+}
+
+.action-btn--warning {
+  background: linear-gradient(135deg, #9e4c00, #d18616);
+  color: #fff;
+  border: 1px solid rgba(240, 136, 62, 0.3);
+}
+.action-btn--warning:not(:disabled):hover {
+  background: linear-gradient(135deg, #d18616, #f0883e);
+}
+
+.action-btn--danger {
+  background: linear-gradient(135deg, #7d1a1a, #b91c1c);
+  color: #fff;
+  border: 1px solid rgba(248, 81, 73, 0.3);
+}
+.action-btn--danger:not(:disabled):hover {
+  background: linear-gradient(135deg, #b91c1c, #f85149);
+}
+
+.action-btn--ghost {
+  background: transparent;
+  color: #8b949e;
+  border: 1px solid #30363d;
+}
+.action-btn--ghost:not(:disabled):hover {
+  background: #21262d;
+  color: #e6edf3;
+}
+
+/* ── Grupo de campo: label + input/select ────────────── */
+.panel-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Inputs y Selects ────────────────────────────────── */
+.panel-input,
+.panel-select {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 5px;
+  color: #e6edf3;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+
+.panel-input:focus,
+.panel-select:focus {
+  border-color: #58a6ff;
+}
+
+.panel-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%238b949e' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 24px;
+}
+
+.panel-label {
+  font-size: 10px;
+  color: #6e7681;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  display: block;
+}
