@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* ============================================
+   DESIGN TOKENS — GrafosWeb
+   ============================================ */
+:root {
+  /* Color palette */
+  --color-bg-primary:     #0d1117;
+  --color-bg-secondary:   #161b22;
+  --color-bg-panel:       #1c2333;
+  --color-bg-card:        #21262d;
+  --color-bg-hover:       #2a3441;
+
+  --color-border:         #30363d;
+  --color-border-subtle:  #21262d;
+
+  --color-accent-primary: #58a6ff;
+  --color-accent-violet:  #bc8cff;
+  --color-accent-green:   #3fb950;
+  --color-accent-orange:  #f0883e;
+  --color-accent-red:     #f85149;
+
+  --color-text-primary:   #e6edf3;
+  --color-text-secondary: #8b949e;
+  --color-text-muted:     #484f58;
+
+  /* Spacing & radius */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px rgba(88, 166, 255, 0.15);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* ============================================
+   GLOBAL RESET & BASE
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ============================================
+   MONOSPACE FOR DATA
+   ============================================ */
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
